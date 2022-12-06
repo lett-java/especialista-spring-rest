@@ -19,34 +19,34 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algaworks.algafood.api.model.CozinhasXmlWrapper;
 import com.algaworks.algafood.api.model.dto.CozinhaDTO;
 import com.algaworks.algafood.domain.model.Cozinha;
-import com.algaworks.algafood.domain.repository.CozinhaRepository;
+import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 
 @RestController
 @RequestMapping("/cozinhas")
 public class CozinhaController {
 
 	@Autowired
-	private CozinhaRepository cozinhaRepository;
+	private CadastroCozinhaService cozinhaService;
 	
 	@GetMapping
 	public List<Cozinha> listar() {
-		return cozinhaRepository.listar();
+		return cozinhaService.listar();
 	}
 	
 	@GetMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable("cozinhaId") Long id) {
-		Cozinha cozinha = cozinhaRepository.buscar(id);
+		Cozinha cozinha = cozinhaService.buscar(id);
 		return (cozinha == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(cozinha));
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	public CozinhasXmlWrapper listarXml() {
-		return new CozinhasXmlWrapper(cozinhaRepository.listar());
+		return cozinhaService.listarXml();
 	}
 	
 	@PostMapping
 	public ResponseEntity<Cozinha> adicionar(@RequestBody Cozinha cozinha) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(cozinhaRepository.salvar(cozinha));
+		return ResponseEntity.status(HttpStatus.CREATED).body(cozinhaService.salvar(cozinha));
 	}
 	
 	@PutMapping("/{cozinhaId}")
@@ -54,16 +54,11 @@ public class CozinhaController {
 		Cozinha entityToUpdate = buscar(id).getBody();
 		BeanUtils.copyProperties(cozinhaDto, entityToUpdate);
 		
-		return ResponseEntity.ok(cozinhaRepository.salvar(entityToUpdate));
+		return ResponseEntity.ok(cozinhaService.salvar(entityToUpdate));
 	}
 	
 	@DeleteMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> remover(@PathVariable("cozinhaId") Long id) {
-		Cozinha cozinhaToRemove = buscar(id).getBody();
-		if (cozinhaToRemove == null) return ResponseEntity.notFound().build();
-		
-		cozinhaRepository.remover(cozinhaToRemove);
-		
-		return ResponseEntity.noContent().build();
+		return cozinhaService.remover(id);
 	}
 }
