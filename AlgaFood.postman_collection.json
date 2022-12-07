@@ -1,0 +1,481 @@
+{
+	"info": {
+		"_postman_id": "5282ad5c-eed1-402c-ad1b-504fff052279",
+		"name": "AlgaFood",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14480810"
+	},
+	"item": [
+		{
+			"name": "Estados",
+			"item": [
+				{
+					"name": "/estado",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{server-algafood}}/estados",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"estados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/estados/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server-algafood}}/estados/1",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"estados",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/estados",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Rio Grande do Sul\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server-algafood}}/estados",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"estados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/estados/id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Bahia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server-algafood}}/estados/1",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"estados",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/estados/id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server-algafood}}/estados/1",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"estados",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cozinhas",
+			"item": [
+				{
+					"name": "/cozinhas/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server-algafood}}/cozinhas/3",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"cozinhas",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cozinhas",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{server-algafood}}/cozinhas",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"cozinhas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cozinhas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Mexicana\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server-algafood}}/cozinhas",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"cozinhas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cozinhas",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Grega\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server-algafood}}/cozinhas/7",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"cozinhas",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cozinha",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server-algafood}}/cozinhas/1",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"cozinhas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurantes",
+			"item": [
+				{
+					"name": "/restaurantes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server-algafood}}/restaurantes",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"restaurantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/restaurantes/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server-algafood}}/restaurantes/4",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"restaurantes",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/restaurantes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Comida Mineira\",\r\n    \"taxaFrete\": 12,\r\n    \"cozinha\": {\r\n        \"id\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server-algafood}}/restaurantes",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"restaurantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/restaurantes/id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 2,\r\n        \"nome\": \"Comida de Rua\",\r\n        \"taxaFrete\": 11.00,\r\n        \"cozinha\": {\r\n            \"id\": 2\r\n        }\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server-algafood}}/restaurantes/2",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"restaurantes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/restaurantes/id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server-algafood}}/restaurantes/2",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"restaurantes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cidades",
+			"item": [
+				{
+					"name": "/cidades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server-algafood}}/cidades",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"cidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cidades/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server-algafood}}/cidades/1",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"cidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cidades",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"SP\",\r\n    \"estado\": {\r\n        \"id\": 2\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server-algafood}}/cidades",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"cidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cidades/id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"São Paulo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server-algafood}}/cidades/4",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"cidades",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/cidades/id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server-algafood}}/cidades/4",
+							"host": [
+								"{{server-algafood}}"
+							],
+							"path": [
+								"cidades",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
