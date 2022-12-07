@@ -2,7 +2,6 @@ package com.algaworks.algafood.api.controller;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -53,10 +52,7 @@ public class CozinhaController {
 	
 	@PutMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> atualizar(@PathVariable("cozinhaId") Long id, @RequestBody CozinhaDTO cozinhaDTO) {
-		Cozinha entityToUpdate = buscar(id).getBody();
-		BeanUtils.copyProperties(cozinhaDTO, entityToUpdate);
-		
-		return ResponseEntity.ok(cozinhaService.salvar(entityToUpdate));
+		return ResponseEntity.ok(cozinhaService.atualizar(id, cozinhaDTO));
 	}
 	
 	@DeleteMapping("/{cozinhaId}")
