@@ -1,17 +1,21 @@
 package com.algaworks.algafood.domain.service;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.model.dto.RestauranteDTO;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class CadastroRestauranteService {
@@ -71,5 +75,43 @@ public class CadastroRestauranteService {
 					String.format("Não existe um cadastro de restaurante com o código %d.", restauranteId));
 		}
 	}
+	
+	public Restaurante merge(Map<String, Object> entity, Long restauranteId) {
+		ObjectMapper objectMapper = new ObjectMapper();
+		Restaurante entityValue = objectMapper.convertValue(entity, Restaurante.class);
+		Restaurante entityToUpdate = buscar(restauranteId); 
+		
+		entity.forEach((chave, valor) -> {
+			Field field = ReflectionUtils.findField(Restaurante.class, chave);
+			field.setAccessible(true);
+
+			Object novoValor = ReflectionUtils.getField(field, entityValue);
+
+			System.out.println(chave + " = " + valor);
+			
+			ReflectionUtils.setField(field, entityToUpdate, novoValor);
+		});
+		
+		return atualizarParcialmente(restauranteId, entityToUpdate);
+	}
+	
+	public Restaurante atualizarParcialmente(Long id, Restaurante restaurante) {
+		Cozinha cozinha = cozinhaService.buscar(restaurante.getCozinha().getId());
+		if (cozinha == null)
+			throw new EntidadeNaoEncontradaException(
+					String.format("Não existe cadastro de cozinha com código %d", restaurante.getCozinha().getId()));
+
+		Restaurante entityToUpdate = buscar(id);
+		if (entityToUpdate == null) {
+			throw new EntidadeNaoEncontradaException(
+					String.format("Não existe cadastro de restaurante com código %d", id));
+		}
+
+		restaurante.setCozinha(cozinha);
+		BeanUtils.copyProperties(restaurante, entityToUpdate);
+
+		return restauranteRepository.salvar(entityToUpdate);
+	}
+
 
 }
