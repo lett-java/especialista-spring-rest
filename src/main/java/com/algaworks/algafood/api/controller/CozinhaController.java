@@ -37,7 +37,7 @@ public class CozinhaController {
 	@GetMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable("cozinhaId") Long id) {
 		Cozinha cozinha = cozinhaService.buscar(id);
-		return (cozinha == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(cozinha));
+		return (cozinha == null? ResponseEntity.notFound().build() : ResponseEntity.ok(cozinha));
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)

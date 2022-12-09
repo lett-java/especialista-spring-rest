@@ -13,7 +13,6 @@ import com.algaworks.algafood.domain.model.Estado;
 import com.algaworks.algafood.domain.model.dto.EstadoDTO;
 import com.algaworks.algafood.domain.repository.EstadoRepository;
 
-
 @Service
 public class CadastroEstadoService {
 
@@ -21,47 +20,37 @@ public class CadastroEstadoService {
 	private EstadoRepository estadoRepository;
 
 	public List<Estado> listar() {
-		return estadoRepository.listar();
+		return estadoRepository.findAll();
 	}
-	
+
 	public Estado buscar(Long id) {
-		return estadoRepository.buscar(id);
+		return estadoRepository.findById(id).orElseThrow(
+				() -> new EntidadeNaoEncontradaException(String.format("Estado de código %d não foi encontrado.", id)));
 	}
 
 	public Estado salvar(EstadoDTO estadoDTO) {
 		if (StringUtils.isBlank(estadoDTO.getNome()))
 			throw new CamposObrigatoriosException("O campo 'Nome' deve ser inserido");
-		
+
 		Estado estado = new Estado();
 		BeanUtils.copyProperties(estadoDTO, estado);
-		
-		return estadoRepository.salvar(estado);
+
+		return estadoRepository.save(estado);
 	}
 
 	public Estado atualizar(Long estadoId, EstadoDTO estadoDTO) {
 		if (StringUtils.isBlank(estadoDTO.getNome()))
 			throw new CamposObrigatoriosException("O campo 'Nome' deve ser inserido");
 		Estado estado = buscar(estadoId);
-		
-		if (estado == null)
-			throw new EntidadeNaoEncontradaException(String.format("Estado de código %d não existe.", estadoId));
-		
+
 		BeanUtils.copyProperties(estadoDTO, estado);
-		
-		return estadoRepository.salvar(estado);
+
+		return estadoRepository.save(estado);
 	}
 
 	public void deletar(Long estadoId) {
 		Estado estado = buscar(estadoId);
-		
-		if (estado == null) 
-			throw new EntidadeNaoEncontradaException(String.format("Estado de código %d não existe.", estadoId));
-		
-		estadoRepository.remover(estado);
-		
+
+		estadoRepository.deleteById(estado.getId());
 	}
-	
-	
-	
-	
 }

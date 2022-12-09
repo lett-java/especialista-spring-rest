@@ -24,11 +24,12 @@ public class CidadeService {
 	private CadastroEstadoService estadoService;
 
 	public List<Cidade> listar() {
-		return cidadeRepository.listar();
+		return cidadeRepository.findAll();
 	}
 
 	public Cidade buscar(Long cidadeId) {
-		return cidadeRepository.buscar(cidadeId);
+		return cidadeRepository.findById(cidadeId).orElseThrow(() -> new EntidadeNaoEncontradaException(
+				String.format("Cidade de código %d não foi encontrada.", cidadeId)));
 	}
 
 	public Cidade adicionar(CidadeDTO cidadeDTO) {
@@ -39,16 +40,13 @@ public class CidadeService {
 			throw new CamposObrigatoriosException("Campo 'Estado' deve ser preenchido com id.");
 
 		Estado estado = estadoService.buscar(cidadeDTO.getEstado().getId());
-		if (estado == null)
-			throw new EntidadeNaoEncontradaException(
-					String.format("Estado de código %d não foi encontrado.", cidadeDTO.getEstado().getId()));
 
 		Cidade cidade = new Cidade();
 		BeanUtils.copyProperties(cidadeDTO, cidade);
 
 		cidade.setEstado(estado);
 
-		return cidadeRepository.salvar(cidade);
+		return cidadeRepository.save(cidade);
 	}
 
 	public Cidade atualizar(Long cidadeId, CidadeDTO cidadeDTO) {
@@ -56,22 +54,15 @@ public class CidadeService {
 			throw new CamposObrigatoriosException("Campo 'Nome' deve ser preenchido.");
 
 		Cidade cidade = buscar(cidadeId);
-		if (cidade == null)
-			throw new EntidadeNaoEncontradaException(
-					String.format("Cidade de código %d não foi encontrado.", cidadeId));
-
 		BeanUtils.copyProperties(cidadeDTO, cidade, "estado");
 
-		return cidadeRepository.salvar(cidade);
+		return cidadeRepository.save(cidade);
 
 	}
 
 	public void deletar(Long cidadeId) {
-		Cidade cidade = buscar(cidadeId);
-		if (cidade == null)
-			throw new EntidadeNaoEncontradaException(String.format("Cidade de código %d não foi encontrada.", cidadeId));
-		
-		cidadeRepository.remover(cidade);
+		buscar(cidadeId);
+		cidadeRepository.deleteById(cidadeId);
 	}
 
 }
