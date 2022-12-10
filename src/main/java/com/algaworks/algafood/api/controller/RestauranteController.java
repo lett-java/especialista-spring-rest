@@ -1,5 +1,6 @@
 package com.algaworks.algafood.api.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -84,18 +85,16 @@ public class RestauranteController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
+	
+	@GetMapping("/por-taxa-frete")
+	public ResponseEntity<List<Restaurante>> restaurantesPorTaxaFrete(BigDecimal taxaInicial, BigDecimal taxaFinal) {
+		return ResponseEntity.ok(restauranteService.restaurantePorTaxaFrente(taxaInicial, taxaFinal));
+	}
+	
+	@GetMapping("/por-nome")
+	public ResponseEntity<List<Restaurante>> restaurantesPorNomeAndCozinha(String nome, Long cozinhaId) {
+		return ResponseEntity.ok(restauranteService.restaurantesPorNomeAndCozinhaId(nome, cozinhaId));
+	}
+	
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

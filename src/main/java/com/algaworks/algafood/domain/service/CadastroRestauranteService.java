@@ -1,6 +1,7 @@
 package com.algaworks.algafood.domain.service;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -94,6 +95,14 @@ public class CadastroRestauranteService {
 		BeanUtils.copyProperties(restaurante, entityToUpdate);
 
 		return restauranteRepository.save(entityToUpdate);
+	}
+
+	public List<Restaurante> restaurantePorTaxaFrente(BigDecimal taxaInicial, BigDecimal taxaFinal) {
+		return restauranteRepository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
+	}
+
+	public List<Restaurante> restaurantesPorNomeAndCozinhaId(String nome, Long cozinhaId) {
+		return restauranteRepository.findByNomeContainingIgnoreCaseAndCozinhaId(nome, cozinhaId);
 	}
 
 }
