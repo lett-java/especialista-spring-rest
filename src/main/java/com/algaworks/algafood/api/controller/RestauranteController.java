@@ -96,5 +96,23 @@ public class RestauranteController {
 		return ResponseEntity.ok(restauranteService.restaurantesPorNomeAndCozinhaId(nome, cozinhaId));
 	}
 	
+	@GetMapping("/primeiro-por-nome")
+	public ResponseEntity<Restaurante> restaurantePrimeiroPorNome(String nome) {
+		return ResponseEntity.ok(restauranteService.restaurantePorNome(nome));
+	}
 	
+	@GetMapping("/top-dois-por-nome")
+	public ResponseEntity<List<Restaurante>> restaurantesTopDoisPorNome(String nome) {
+		return ResponseEntity.ok(restauranteService.restaurantesTopDoisPorNome(nome));
+	}
+	
+	@GetMapping("/exists")
+	public ResponseEntity<Boolean> restauranteExists(String nome) {
+		return ResponseEntity.ok(restauranteService.existsByNome(nome));
+	}
+
+	@GetMapping("/count")
+	public ResponseEntity<Integer> countPorCozinha(Long cozinhaId) {
+		return ResponseEntity.ok(restauranteService.countByCozinha(cozinhaId));
+	}
 }

@@ -105,4 +105,23 @@ public class CadastroRestauranteService {
 		return restauranteRepository.findByNomeContainingIgnoreCaseAndCozinhaId(nome, cozinhaId);
 	}
 
+	public Restaurante restaurantePorNome(String nome) {
+		return restauranteRepository.findFirstRestauranteByNomeContainingIgnoreCase(nome)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException(
+						String.format("Restaurante contendo no nome %s, não foi encontrado", nome)));
+
+	}
+
+	public List<Restaurante> restaurantesTopDoisPorNome(String nome) {
+		return restauranteRepository.findTop2ByNomeContainingIgnoreCase(nome);
+	}
+
+	public Boolean existsByNome(String nome) {
+		return restauranteRepository.existsByNomeIgnoreCase(nome);
+	}
+
+	public Integer countByCozinha(Long cozinhaId) {
+		return restauranteRepository.countByCozinhaId(cozinhaId);
+	}
+
 }
