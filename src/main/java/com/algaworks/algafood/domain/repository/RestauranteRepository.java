@@ -9,16 +9,19 @@ import org.springframework.data.repository.query.Param;
 
 import com.algaworks.algafood.domain.model.Restaurante;
 
-public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {
+public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, RestauranteRepositoryQueries {
 
 	List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
-	
+
 //	@Query("FROM Restaurante WHERE nome LIKE %:nome% AND cozinha.id = :id")
 	List<Restaurante> consultarPorNome(String nome, @Param("id") long cozinhaId);
 
 	Optional<Restaurante> findFirstRestauranteByNomeContainingIgnoreCase(String nome);
+
 	List<Restaurante> findTop2ByNomeContainingIgnoreCase(String nome);
+
 	Boolean existsByNomeIgnoreCase(String nome);
+
 	Integer countByCozinhaId(Long CozinhaId);
-	
+
 }

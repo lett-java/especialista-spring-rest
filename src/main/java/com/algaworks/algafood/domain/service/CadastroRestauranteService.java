@@ -123,5 +123,9 @@ public class CadastroRestauranteService {
 	public Integer countByCozinha(Long cozinhaId) {
 		return restauranteRepository.countByCozinhaId(cozinhaId);
 	}
+	
+	public List<Restaurante> restaurantePorNomeAndTaxaFrente(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal) {
+		return restauranteRepository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
+	}
 
 }

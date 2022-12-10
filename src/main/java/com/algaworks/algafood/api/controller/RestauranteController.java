@@ -115,4 +115,9 @@ public class RestauranteController {
 	public ResponseEntity<Integer> countPorCozinha(Long cozinhaId) {
 		return ResponseEntity.ok(restauranteService.countByCozinha(cozinhaId));
 	}
+	
+	@GetMapping("/nome-taxa-frete")
+	public ResponseEntity<List<Restaurante>> restaurantesPorNomeAndTaxaFrete(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal) {
+		return ResponseEntity.ok(restauranteService.restaurantePorNomeAndTaxaFrente(nome, taxaInicial, taxaFinal));
+	}
 }
