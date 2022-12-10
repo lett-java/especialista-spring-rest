@@ -102,7 +102,7 @@ public class CadastroRestauranteService {
 	}
 
 	public List<Restaurante> restaurantesPorNomeAndCozinhaId(String nome, Long cozinhaId) {
-		return restauranteRepository.findByNomeContainingIgnoreCaseAndCozinhaId(nome, cozinhaId);
+		return restauranteRepository.consultarPorNome(nome, cozinhaId);
 	}
 
 	public Restaurante restaurantePorNome(String nome) {
