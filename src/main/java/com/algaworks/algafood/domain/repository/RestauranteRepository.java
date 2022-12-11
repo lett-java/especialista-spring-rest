@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.algaworks.algafood.domain.model.Restaurante;
@@ -24,5 +25,8 @@ public interface RestauranteRepository
 	Boolean existsByNomeIgnoreCase(String nome);
 
 	Integer countByCozinhaId(Long CozinhaId);
+	
+	@Query("from Restaurante r join r.cozinha left join fetch r.formasPagamento")
+	List<Restaurante> findAll();
 
 }
