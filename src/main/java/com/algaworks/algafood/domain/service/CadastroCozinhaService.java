@@ -58,4 +58,8 @@ public class CadastroCozinhaService {
 					String.format("Cozinha de código %d não pode ser removida, pois está em uso", cozinhaId));
 		}
 	}
+
+	public Cozinha buscarPrimeiro() {
+		return cozinhaRepository.buscarPrimeiro().get();
+	}
 }

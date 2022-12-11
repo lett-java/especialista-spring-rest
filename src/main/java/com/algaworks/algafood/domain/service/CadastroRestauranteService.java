@@ -131,8 +131,12 @@ public class CadastroRestauranteService {
 		return restauranteRepository.find(nome, taxaInicial, taxaFinal);
 	}
 
-	public List<Restaurante> findAll(String nome) {
+	public List<Restaurante> findAllComFreteGratis(String nome) {
 		return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
+	}
+
+	public Restaurante buscarPrimeiro() {
+		return restauranteRepository.buscarPrimeiro().get();
 	}
 
 }

@@ -68,4 +68,9 @@ public class CozinhaController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
+	
+	@GetMapping("/primeiro")
+	public ResponseEntity<Cozinha> cozinhasComFreteGratis() {
+		return ResponseEntity.ok(cozinhaService.buscarPrimeiro());
+	}
 }

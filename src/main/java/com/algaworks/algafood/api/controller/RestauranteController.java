@@ -126,8 +126,13 @@ public class RestauranteController {
 
 	@GetMapping("/com-frete-gratis")
 	public ResponseEntity<List<Restaurante>> restaurantesComFreteGratis(String nome) {
-		List<Restaurante> restaurantes = restauranteService.findAll(nome);
+		List<Restaurante> restaurantes = restauranteService.findAllComFreteGratis(nome);
 
 		return ResponseEntity.ok(restaurantes);
+	}
+
+	@GetMapping("/primeiro")
+	public ResponseEntity<Restaurante> restaurantesComFreteGratis() {
+		return ResponseEntity.ok(restauranteService.buscarPrimeiro());
 	}
 }
