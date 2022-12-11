@@ -24,8 +24,6 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.model.dto.RestauranteDTO;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
-import com.algaworks.algafood.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
-import com.algaworks.algafood.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -128,10 +126,7 @@ public class RestauranteController {
 
 	@GetMapping("/com-frete-gratis")
 	public ResponseEntity<List<Restaurante>> restaurantesComFreteGratis(String nome) {
-		var comFreteGratis = new RestauranteComFreteGratisSpec();
-		var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
-
-		List<Restaurante> restaurantes = restauranteService.findAll(comFreteGratis.and(comNomeSemelhante));
+		List<Restaurante> restaurantes = restauranteService.findAll(nome);
 
 		return ResponseEntity.ok(restaurantes);
 	}

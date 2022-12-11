@@ -1,5 +1,8 @@
 package com.algaworks.algafood.domain.service;
 
+import static com.algaworks.algafood.infrastructure.repository.spec.RestauranteSpecs.comFreteGratis;
+import static com.algaworks.algafood.infrastructure.repository.spec.RestauranteSpecs.comNomeSemelhante;
+
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.List;
@@ -8,7 +11,6 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -129,8 +131,8 @@ public class CadastroRestauranteService {
 		return restauranteRepository.find(nome, taxaInicial, taxaFinal);
 	}
 
-	public List<Restaurante> findAll(Specification<Restaurante> specification) {
-		return restauranteRepository.findAll(specification);
+	public List<Restaurante> findAll(String nome) {
+		return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
 	}
 
 }
