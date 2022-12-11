@@ -24,37 +24,40 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.model.dto.RestauranteDTO;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
+import com.algaworks.algafood.infrastructure.repository.spec.RestauranteComFreteGratisSpec;
+import com.algaworks.algafood.infrastructure.repository.spec.RestauranteComNomeSemelhanteSpec;
 
 @RestController
 @RequestMapping("/restaurantes")
 public class RestauranteController {
-	
+
 	@Autowired
 	private CadastroRestauranteService restauranteService;
-	
+
 	@GetMapping
 	public ResponseEntity<List<Restaurante>> listar() {
 		return ResponseEntity.ok(restauranteService.listar());
 	}
-	
+
 	@GetMapping("/{restauranteId}")
 	public ResponseEntity<Restaurante> buscar(@PathVariable("restauranteId") Long id) {
 		Restaurante restaurante = restauranteService.buscar(id);
 		return (restaurante == null) ? ResponseEntity.notFound().build() : ResponseEntity.ok(restaurante);
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> adicionar(@RequestBody RestauranteDTO restauranteDTO) {
 		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(restauranteService.salvar(restauranteDTO));			
+			return ResponseEntity.status(HttpStatus.CREATED).body(restauranteService.salvar(restauranteDTO));
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-	
+
 	@PutMapping("/{restauranteId}")
-	public ResponseEntity<?> atualizar(@PathVariable("restauranteId") Long id, @RequestBody RestauranteDTO restauranteDTO) {
+	public ResponseEntity<?> atualizar(@PathVariable("restauranteId") Long id,
+			@RequestBody RestauranteDTO restauranteDTO) {
 		try {
 			return ResponseEntity.ok(restauranteService.atualizar(id, restauranteDTO));
 		} catch (EntidadeNaoEncontradaException e) {
@@ -63,20 +66,21 @@ public class RestauranteController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-	
+
 	@DeleteMapping("/{restauranteId}")
 	public ResponseEntity<Cozinha> remover(@PathVariable Long restauranteId) {
 		try {
-			restauranteService.excluir(restauranteId);	
+			restauranteService.excluir(restauranteId);
 			return ResponseEntity.noContent().build();
 
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@PatchMapping("/{restauranteId}")
-	public ResponseEntity<?> atualizacaoParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> entity) {
+	public ResponseEntity<?> atualizacaoParcial(@PathVariable Long restauranteId,
+			@RequestBody Map<String, Object> entity) {
 		try {
 			return ResponseEntity.ok(restauranteService.merge(entity, restauranteId));
 		} catch (EntidadeNaoEncontradaException e) {
@@ -85,27 +89,27 @@ public class RestauranteController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-	
+
 	@GetMapping("/por-taxa-frete")
 	public ResponseEntity<List<Restaurante>> restaurantesPorTaxaFrete(BigDecimal taxaInicial, BigDecimal taxaFinal) {
 		return ResponseEntity.ok(restauranteService.restaurantePorTaxaFrente(taxaInicial, taxaFinal));
 	}
-	
+
 	@GetMapping("/por-nome")
 	public ResponseEntity<List<Restaurante>> restaurantesPorNomeAndCozinha(String nome, Long cozinhaId) {
 		return ResponseEntity.ok(restauranteService.restaurantesPorNomeAndCozinhaId(nome, cozinhaId));
 	}
-	
+
 	@GetMapping("/primeiro-por-nome")
 	public ResponseEntity<Restaurante> restaurantePrimeiroPorNome(String nome) {
 		return ResponseEntity.ok(restauranteService.restaurantePorNome(nome));
 	}
-	
+
 	@GetMapping("/top-dois-por-nome")
 	public ResponseEntity<List<Restaurante>> restaurantesTopDoisPorNome(String nome) {
 		return ResponseEntity.ok(restauranteService.restaurantesTopDoisPorNome(nome));
 	}
-	
+
 	@GetMapping("/exists")
 	public ResponseEntity<Boolean> restauranteExists(String nome) {
 		return ResponseEntity.ok(restauranteService.existsByNome(nome));
@@ -115,9 +119,20 @@ public class RestauranteController {
 	public ResponseEntity<Integer> countPorCozinha(Long cozinhaId) {
 		return ResponseEntity.ok(restauranteService.countByCozinha(cozinhaId));
 	}
-	
+
 	@GetMapping("/nome-taxa-frete")
-	public ResponseEntity<List<Restaurante>> restaurantesPorNomeAndTaxaFrete(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal) {
+	public ResponseEntity<List<Restaurante>> restaurantesPorNomeAndTaxaFrete(String nome, BigDecimal taxaInicial,
+			BigDecimal taxaFinal) {
 		return ResponseEntity.ok(restauranteService.restaurantePorNomeAndTaxaFrente(nome, taxaInicial, taxaFinal));
+	}
+
+	@GetMapping("/com-frete-gratis")
+	public ResponseEntity<List<Restaurante>> restaurantesComFreteGratis(String nome) {
+		var comFreteGratis = new RestauranteComFreteGratisSpec();
+		var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
+
+		List<Restaurante> restaurantes = restauranteService.findAll(comFreteGratis.and(comNomeSemelhante));
+
+		return ResponseEntity.ok(restaurantes);
 	}
 }

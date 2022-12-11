@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -126,6 +127,10 @@ public class CadastroRestauranteService {
 	
 	public List<Restaurante> restaurantePorNomeAndTaxaFrente(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal) {
 		return restauranteRepository.find(nome, taxaInicial, taxaFinal);
+	}
+
+	public List<Restaurante> findAll(Specification<Restaurante> specification) {
+		return restauranteRepository.findAll(specification);
 	}
 
 }
